@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1063827407039",
+    "project_id": "cryp-talk",
+    "storage_bucket": "cryp-talk.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1063827407039:android:01d302e3cf562c6d3e060a",
+        "android_client_info": {
+          "package_name": "com.example.cryp_talk_firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1063827407039-brji23dhhejl551p506l8hgr1dmvr65m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cryp_talk_firebase",
+            "certificate_hash": "e77c3d99af0746872fff786ffdfb11ea910afe0b"
+          }
+        },
+        {
+          "client_id": "1063827407039-cmubgbijufl3fabff0liq3jf6pn7itbt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbeJRem7ZRO9bGMfcapL7QTVX4gAUHYeE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1063827407039-cmubgbijufl3fabff0liq3jf6pn7itbt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
