@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Icon(
                     choice.icon,
-                    color: ColorConstants.primaryColor
+                    color: Colors.grey[900]
                   ),
                   Container(
                     width: 10,
@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
                   Text(
                     choice.title,
                     style: TextStyle(
-                      color: ColorConstants.primaryColor
+                      color: Colors.grey[900]
                     ),
                   ),
                 ],
@@ -107,7 +107,14 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: isWhite ? Colors.white: Colors.black,
       appBar: AppBar(
-        backgroundColor: isWhite ? Colors.white: Colors.black,
+        backgroundColor: isWhite ? Colors.white38: Colors.grey[900],
+        title: Text(
+          'CrypTalk',
+          style: TextStyle(
+            color: Colors.grey[600],
+            letterSpacing: 0.5,
+          ),
+        ),
         leading: IconButton(
           icon: Switch(
             value: isWhite,

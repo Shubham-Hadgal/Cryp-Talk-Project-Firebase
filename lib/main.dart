@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cryp_talk_firebase/providers/setting_provider.dart';
 import 'package:cryp_talk_firebase/screens/splash_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -41,6 +42,13 @@ class MyApp extends StatelessWidget
             googleSignIn: GoogleSignIn(),
             prefs: this.prefs,
             firebaseFirestore: this.firebaseFirestore
+          ),
+        ),
+        Provider<SettingProvider>(
+          create: (_) => SettingProvider(
+              prefs: this.prefs,
+              firebaseStorage: this.firebaseStorage,
+              firebaseFirestore: this.firebaseFirestore
           ),
         ),
       ],

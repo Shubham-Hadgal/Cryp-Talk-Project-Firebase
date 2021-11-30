@@ -46,7 +46,7 @@ class _SplashPageState extends State<SplashPage> {
                 'CrypTalk',
                 style: TextStyle(
                   fontSize: 26.0,
-                  color: Color(0xffff1b5c)
+                  color: ColorConstants.primaryColor,
                 ),
               ),
             ),
@@ -60,7 +60,7 @@ class _SplashPageState extends State<SplashPage> {
               width: 30,
               height: 30,
               child: CircularProgressIndicator(
-                color: Color(0xffd21054),
+                color: ColorConstants.primaryColor,
               ),
             ),
           ],
