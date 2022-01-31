@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cryp_talk_firebase/providers/home_provider.dart';
 import 'package:cryp_talk_firebase/providers/setting_provider.dart';
 import 'package:cryp_talk_firebase/screens/splash_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -50,6 +51,9 @@ class MyApp extends StatelessWidget
               firebaseStorage: this.firebaseStorage,
               firebaseFirestore: this.firebaseFirestore
           ),
+        ),
+        Provider<HomeProvider> (
+          create: (_) => HomeProvider(firebaseFirestore: this.firebaseFirestore),
         ),
       ],
       child: MaterialApp(
