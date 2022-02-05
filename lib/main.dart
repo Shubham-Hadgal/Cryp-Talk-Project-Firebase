@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cryp_talk_firebase/providers/chat_provider.dart';
 import 'package:cryp_talk_firebase/providers/home_provider.dart';
 import 'package:cryp_talk_firebase/providers/setting_provider.dart';
 import 'package:cryp_talk_firebase/screens/splash_page.dart';
@@ -54,6 +55,9 @@ class MyApp extends StatelessWidget
         ),
         Provider<HomeProvider> (
           create: (_) => HomeProvider(firebaseFirestore: this.firebaseFirestore),
+        ),
+        Provider<ChatProvider>(
+          create: (_) => ChatProvider(prefs: this.prefs, firebaseFirestore: this.firebaseFirestore, firebaseStorage: this.firebaseStorage),
         ),
       ],
       child: MaterialApp(
