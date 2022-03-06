@@ -13,8 +13,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'full_photo_page.dart';
 import 'login_page.dart';
 
 class ChatPage extends StatefulWidget {
@@ -297,6 +299,11 @@ class ChatPageState extends State<ChatPage> {
                     fit: BoxFit.cover,
                   ),
                 ),
+              ],
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            ),
+            Row(
+              children: <Widget>[
                 TextButton(
                   onPressed: () => onSendMessage('mimi4', TypeMessage.sticker),
                   child: Image.asset(
@@ -324,6 +331,12 @@ class ChatPageState extends State<ChatPage> {
                     fit: BoxFit.cover,
                   ),
                 ),
+              ],
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            ),
+
+            Row(
+              children: <Widget>[
                 TextButton(
                   onPressed: () => onSendMessage('mimi7', TypeMessage.sticker),
                   child: Image.asset(
@@ -506,7 +519,16 @@ class ChatPageState extends State<ChatPage> {
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                   clipBehavior: Clip.hardEdge,
                 ),
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => FullPhotoPage(
+                          url: messageChat.content,
+                        ),
+                    ),
+                  );
+                },
                 style: ButtonStyle(padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(0))),
               ),
               margin: EdgeInsets.only(bottom: isLastMessageRight(index) ? 20 : 10, right: 10),
@@ -520,6 +542,7 @@ class ChatPageState extends State<ChatPage> {
               margin: EdgeInsets.only(bottom: isLastMessageRight(index) ? 20 : 10, right: 10),
             ),
           ],
+          mainAxisAlignment: MainAxisAlignment.end,
         );
       }else{
         return Container(
@@ -616,10 +639,17 @@ class ChatPageState extends State<ChatPage> {
                         borderRadius: BorderRadius.all(Radius.circular(8)),
                         clipBehavior: Clip.hardEdge,
                       ),
-                      onPressed: (){},
+                      onPressed: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FullPhotoPage(url: messageChat.content),
+                          )
+                        );
+                      },
                       style: ButtonStyle(padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(0))),
                     ),
-                    margin: EdgeInsets.only(bottom: isLastMessageRight(index) ? 20 : 10, right: 10),
+                    margin: EdgeInsets.only(left: 10),
                   ) : Container(
                     child: Image.asset(
                       'images/${messageChat.content}.gif',
@@ -631,8 +661,20 @@ class ChatPageState extends State<ChatPage> {
                   ),
                 ],
               ),
+
+              isLastMessageLeft(index)
+              ? Container(
+                child: Text(
+                  DateFormat('dd MMM yyyy, hh: mm a')
+                      .format(DateTime.fromMillisecondsSinceEpoch(int.parse(messageChat.timestamp))),
+                  style: TextStyle(color: ColorConstants.greyColor, fontSize: 12, fontStyle: FontStyle.italic),
+                ),
+                margin: EdgeInsets.only(left: 50, top: 5, bottom: 5),
+              ) : SizedBox.shrink()
             ],
+            crossAxisAlignment: CrossAxisAlignment.start,
           ),
+          margin: EdgeInsets.only(bottom: 10),
         );
       }
     }else{
