@@ -209,6 +209,7 @@ class _HomePageState extends State<HomePage> {
         if(message.notification != null)
         {
           //show notification
+          showNotification(message.notification!);
         }
         return;
     });
@@ -228,6 +229,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     authProvider = context.read<AuthProvider>();
     homeProvider = context.read<HomeProvider>();
+
     if(authProvider.getUserIdFirebaseId()?.isNotEmpty == true){
       currentUserId = authProvider.getUserIdFirebaseId()!;
     }else {
@@ -235,7 +237,47 @@ class _HomePageState extends State<HomePage> {
               (Route<dynamic> route) => false,
       );
     }
+
+    registerNotification();
+    configureLocalNotification();
     listScrollController.addListener(scrollListener);
+  }
+
+  void configureLocalNotification(){
+    AndroidInitializationSettings initializationAndroidSettings = AndroidInitializationSettings("app_icon");
+    IOSInitializationSettings initializationIOsSettings = IOSInitializationSettings();
+    InitializationSettings initializationSettings = InitializationSettings(
+        android: initializationAndroidSettings,
+        iOS: initializationIOsSettings,
+    );
+    flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  }
+
+  void showNotification(RemoteNotification remoteNotification) async
+  {
+    AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
+      "com.example.cryp_talk_firebase",
+      "Cryp Talk",
+      playSound: true,
+      enableVibration: true,
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+
+    IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
+
+    NotificationDetails notificationDetails = NotificationDetails(
+        android: androidNotificationDetails,
+        iOS: iosNotificationDetails,
+    );
+
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      remoteNotification.title,
+      remoteNotification.body,
+      notificationDetails,
+      payload: null,
+    );
   }
 
   @override
