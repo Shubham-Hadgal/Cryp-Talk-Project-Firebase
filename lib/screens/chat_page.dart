@@ -217,6 +217,8 @@ class ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: isWhite ? Colors.white : Colors.black,
       appBar: AppBar(
@@ -257,7 +259,11 @@ class ChatPageState extends State<ChatPage> {
                 buildInput(),
               ],
             ),
-            buildLoading()
+            Positioned(
+              child: isLoading ? LoadingView() : SizedBox.shrink(),
+              left: width/2,
+              top: height/3,
+            ),
           ],
         ),
         onWillPop: onBackPress,
