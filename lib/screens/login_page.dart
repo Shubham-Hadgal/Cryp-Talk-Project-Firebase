@@ -1,4 +1,3 @@
-import 'package:cryp_talk_firebase/constants/color_constants.dart';
 import 'package:cryp_talk_firebase/providers/auth_provider.dart';
 import 'package:cryp_talk_firebase/screens/home_page.dart';
 import 'package:cryp_talk_firebase/widgets/loading_view.dart';
