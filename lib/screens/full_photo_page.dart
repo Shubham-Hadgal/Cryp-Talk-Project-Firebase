@@ -16,19 +16,17 @@ class FullPhotoPage extends StatelessWidget {
       backgroundColor: isWhite ? Colors.white : Colors.black,
       appBar: AppBar(
         backgroundColor: isWhite ? Colors.white : Colors.grey[900],
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: ColorConstants.primaryColor,
         ),
-        title: Text(
+        title: const Text(
           AppConstants.fullPhotoTitle,
           style: TextStyle(color: ColorConstants.primaryColor),
         ),
         centerTitle: true,
       ),
-      body: Container(
-        child: PhotoView(
-            imageProvider: NetworkImage(url),
-          )
+      body: PhotoView(
+          imageProvider: NetworkImage(url),
         ),
       );
   }

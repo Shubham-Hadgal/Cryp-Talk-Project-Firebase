@@ -12,11 +12,11 @@ class MessageChat {
 
   Map<String, dynamic> toJson () {
     return {
-      FirestoreConstants.idFrom: this.idFrom,
-      FirestoreConstants.idTo: this.idTo,
-      FirestoreConstants.timestamp: this.timestamp,
-      FirestoreConstants.content: this.content,
-      FirestoreConstants.type: this.type,
+      FirestoreConstants.idFrom: idFrom,
+      FirestoreConstants.idTo: idTo,
+      FirestoreConstants.timestamp: timestamp,
+      FirestoreConstants.content: content,
+      FirestoreConstants.type: type,
     };
   }
 

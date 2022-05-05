@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cryp_talk_firebase/constants/constants.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class HomeProvider {
   final FirebaseFirestore firebaseFirestore;

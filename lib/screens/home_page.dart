@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cryp_talk_firebase/constants/color_constants.dart';
 import 'package:cryp_talk_firebase/constants/constants.dart';
 import 'package:cryp_talk_firebase/main.dart';
 import 'package:cryp_talk_firebase/models/user_chat.dart';
@@ -20,6 +18,7 @@ import 'package:cryp_talk_firebase/providers/auth_provider.dart';
 import 'package:cryp_talk_firebase/screens/login_page.dart';
 import 'package:cryp_talk_firebase/screens/settings_page.dart';
 import 'package:flutter/material.dart';
+// ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 
 import 'chat_page.dart';
@@ -40,7 +39,7 @@ class _HomePageState extends State<HomePage> {
   final ScrollController listScrollController = ScrollController();
 
   int _limit = 20;
-  int _limitIncrement = 20;
+  final int _limitIncrement = 20;
   String _textSearch = "";
   bool isLoading = false;
 
@@ -58,7 +57,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> handleSignOut() async{
     authProvider.handleSignOut();
-    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage()));
   }
 
   void scrollListener() {
@@ -70,11 +69,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   void onItemMenuPress(PopupChoices choice){
-    if(choice.title == "Sign Out"){
+    if(choice.title == "Sign out"){
       handleSignOut();
     }
     else{
-      Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage()));
     }
   }
 
@@ -94,19 +93,19 @@ class _HomePageState extends State<HomePage> {
             children: [
               Container(
                 color: ColorConstants.themeColor,
-                padding: EdgeInsets.only(bottom: 10, top: 10),
+                padding: const EdgeInsets.only(bottom: 10, top: 10),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
-                      child: Icon(Icons.exit_to_app, size: 30, color: Colors.white),
-                      margin: EdgeInsets.only(bottom: 10),
+                      child: const Icon(Icons.exit_to_app, size: 30, color: Colors.white),
+                      margin: const EdgeInsets.only(bottom: 10),
                     ),
-                    Text(
+                    const Text(
                       'Exit App',
                       style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                    Text(
+                    const Text(
                       'Are you sure to Exit App ?',
                       style: TextStyle(color: Colors.white, fontSize: 14),
                     ),
@@ -120,13 +119,13 @@ class _HomePageState extends State<HomePage> {
                 child: Row(
                   children: [
                     Container(
-                      child: Icon(
+                      child: const Icon(
                         Icons.cancel,
                         color: ColorConstants.primaryColor,
                       ),
-                      margin: EdgeInsets.only(right: 10),
+                      margin: const EdgeInsets.only(right: 10),
                     ),
-                    Text(
+                    const Text(
                       'Cancel',
                       style: TextStyle(color: ColorConstants.primaryColor, fontWeight: FontWeight.bold),
                     ),
@@ -140,13 +139,13 @@ class _HomePageState extends State<HomePage> {
                 child: Row(
                   children: [
                     Container(
-                      child: Icon(
+                      child: const Icon(
                         Icons.check_circle,
                         color: ColorConstants.primaryColor,
                       ),
-                      margin: EdgeInsets.only(right: 10),
+                      margin: const EdgeInsets.only(right: 10),
                     ),
-                    Text(
+                    const Text(
                       'Yes',
                       style: TextStyle(color: ColorConstants.primaryColor, fontWeight: FontWeight.bold),
                     ),
@@ -166,7 +165,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildPopupMenu(){
     return PopupMenuButton<PopupChoices>(
-      icon: Icon(Icons.more_vert, color: Colors.grey),
+      icon: const Icon(Icons.more_vert, color: Colors.grey),
         onSelected: onItemMenuPress,
         itemBuilder: (BuildContext context) {
           return choices.map((PopupChoices choice){
@@ -233,7 +232,7 @@ class _HomePageState extends State<HomePage> {
     if(authProvider.getUserIdFirebaseId()?.isNotEmpty == true){
       currentUserId = authProvider.getUserIdFirebaseId()!;
     }else {
-      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => LoginPage()),
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const LoginPage()),
               (Route<dynamic> route) => false,
       );
     }
@@ -244,8 +243,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   void configureLocalNotification(){
-    AndroidInitializationSettings initializationAndroidSettings = AndroidInitializationSettings("app_icon");
-    IOSInitializationSettings initializationIOsSettings = IOSInitializationSettings();
+    AndroidInitializationSettings initializationAndroidSettings = const AndroidInitializationSettings("app_icon");
+    IOSInitializationSettings initializationIOsSettings = const IOSInitializationSettings();
     InitializationSettings initializationSettings = InitializationSettings(
         android: initializationAndroidSettings,
         iOS: initializationIOsSettings,
@@ -255,7 +254,7 @@ class _HomePageState extends State<HomePage> {
 
   void showNotification(RemoteNotification remoteNotification) async
   {
-    AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
+    AndroidNotificationDetails androidNotificationDetails = const AndroidNotificationDetails(
       "com.example.cryp_talk_firebase",
       "Cryp Talk",
       playSound: true,
@@ -264,7 +263,7 @@ class _HomePageState extends State<HomePage> {
       priority: Priority.high,
     );
 
-    IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
+    IOSNotificationDetails iosNotificationDetails = const IOSNotificationDetails();
 
     NotificationDetails notificationDetails = NotificationDetails(
         android: androidNotificationDetails,
@@ -286,20 +285,23 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: isWhite ? Colors.white: Colors.black,
       appBar: AppBar(
         backgroundColor: isWhite ? Colors.white38: Colors.grey[900],
-        title: Text(
-          'CrypTalk',
-          style: TextStyle(
-            color: Colors.grey[600],
-            letterSpacing: 0.5,
+        title: Container(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text(
+            'CrypTalk',
+            style: TextStyle(
+              color: Colors.grey[600],
+              letterSpacing: 0.5,
+            ),
           ),
         ),
-        leading: IconButton(
+        /*leading: IconButton(
           icon: Switch(
             value: isWhite,
             onChanged: (value){
               setState(() {
                 isWhite = value;
-                print(isWhite);
+                // print(isWhite);
               });
             },
             activeTrackColor: Colors.grey,
@@ -308,8 +310,9 @@ class _HomePageState extends State<HomePage> {
             inactiveThumbColor: Colors.black45,
           ),
           onPressed: ()=>"",
-        ),
+        ),*/
         actions: [
+          handleDarkMode(),
           buildPopupMenu(),
         ],
       ),
@@ -327,18 +330,18 @@ class _HomePageState extends State<HomePage> {
                       if(snapshot.hasData) {
                         if((snapshot.data?.docs.length ?? 0) > 0) {
                           return ListView.builder(
-                            padding: EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
                             itemBuilder: (context, index) => buildItem(context, snapshot.data?.docs[index]),
                             itemCount: snapshot.data?.docs.length,
                             controller: listScrollController,
                           );
                         } else {
-                          return Center(
+                          return const Center(
                             child: Text('No Users found...', style: TextStyle(color: Colors.grey)),
                           );
                         }
                       } else {
-                        return Center(
+                        return const Center(
                           child: CircularProgressIndicator(
                             color: Colors.grey,
                           ),
@@ -350,7 +353,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             Positioned(
-              child: isLoading ? LoadingView(): SizedBox.shrink(),
+              child: isLoading ? const LoadingView(): const SizedBox.shrink(),
             ),
           ],
         ),
@@ -360,12 +363,12 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildSearchBar() {
     return Container(
-      height: 40,
+      height: 50,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Icon(Icons.search, color: Colors.grey[800], size: 20),
-          SizedBox(width: 5),
+          const SizedBox(width: 5),
           Expanded(
             child: TextFormField(
               textInputAction: TextInputAction.search,
@@ -383,8 +386,8 @@ class _HomePageState extends State<HomePage> {
                   });
                 }
               },
-              decoration: InputDecoration.collapsed(hintText: "Search here...", hintStyle: TextStyle(fontSize: 13, color: Colors.grey[800]),),
-              style: TextStyle(fontSize: 13),
+              decoration: InputDecoration.collapsed(hintText: "Search here...", hintStyle: TextStyle(fontSize: 15, color: Colors.grey[800]),),
+              style: const TextStyle(fontSize: 13),
             ),
           ),
           StreamBuilder(
@@ -399,19 +402,19 @@ class _HomePageState extends State<HomePage> {
                         _textSearch = "";
                       });
                     },
-                    child: Icon(Icons.clear_rounded, color: ColorConstants.greyColor, size: 20),
+                    child: const Icon(Icons.clear_rounded, color: ColorConstants.greyColor, size: 20),
                     )
-                : SizedBox.shrink();
+                : const SizedBox.shrink();
             },
           ),
         ],
       ),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: ColorConstants.greyColor2,
+        borderRadius: BorderRadius.circular(28),
+        color: Colors.grey,
       ),
-      padding: EdgeInsets.fromLTRB(10, 8, 10, 8),
-      margin: EdgeInsets.fromLTRB(10, 8, 10, 8),
+      padding: const EdgeInsets.fromLTRB(20, 8, 10, 8),
+      margin: const EdgeInsets.fromLTRB(10, 12, 10, 6),
     );
   }
 
@@ -419,7 +422,7 @@ class _HomePageState extends State<HomePage> {
     if(document != null) {
       UserChat userChat = UserChat.fromDocument(document);
       if(userChat.id == currentUserId) {
-        return SizedBox.shrink();
+        return const SizedBox.shrink();
       } else {
         return Container(
           child: TextButton(
@@ -434,7 +437,7 @@ class _HomePageState extends State<HomePage> {
                           height: 50,
                           loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress){
                             if(loadingProgress == null) return child;
-                            return Container(
+                            return SizedBox(
                               width: 50,
                               height: 50,
                               child: CircularProgressIndicator(
@@ -446,19 +449,19 @@ class _HomePageState extends State<HomePage> {
                             );
                           },
                           errorBuilder: (context, object, stackTrace) {
-                            return Icon(
+                            return const Icon(
                               Icons.account_circle,
                               size: 50,
                               color: ColorConstants.greyColor,
                             );
                           }
                         )
-                      :Icon(
+                      :const Icon(
                         Icons.account_circle,
                         size: 50,
                         color: ColorConstants.greyColor,
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
+                      borderRadius: const BorderRadius.all(Radius.circular(25)),
                       clipBehavior: Clip.hardEdge,
                   ),
                 Flexible(
@@ -467,25 +470,25 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Container(
                           child: Text(
-                            '${userChat.nickname}',
+                            userChat.nickname,
                             maxLines: 1,
-                            style: TextStyle(color: Colors.grey[700], fontWeight: FontWeight.bold, fontSize: 18),
+                            style: TextStyle(color: Colors.grey[600], fontWeight: FontWeight.bold, fontSize: 18),
                           ),
                             alignment: Alignment.centerLeft,
-                            margin: EdgeInsets.fromLTRB(10, 0, 0, 5),
+                            margin: const EdgeInsets.fromLTRB(5, 7, 0, 7),
                           ),
                           Container(
                             child: Text(
-                              '${userChat.aboutMe}',
+                              userChat.aboutMe,
                               maxLines: 1,
-                              style: TextStyle(color: Colors.grey[700]),
+                              style: TextStyle(color: Colors.grey[700], fontSize: 15),
                             ),
                             alignment: Alignment.centerLeft,
-                            margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                            margin: const EdgeInsets.fromLTRB(5, 0, 0, 7),
                           ),
                       ],
                     ),
-                    margin: EdgeInsets.only(left: 20),
+                    margin: const EdgeInsets.only(left: 20),
                   ),
                 ),
               ],
@@ -505,17 +508,36 @@ class _HomePageState extends State<HomePage> {
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.2)),
               shape: MaterialStateProperty.all(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10),),
+                const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15),),
                 ),
               )
             ),
           ),
-          margin: EdgeInsets.only(bottom: 10, left: 5, right: 5),
+          margin: const EdgeInsets.only(bottom: 10, left: 5, right: 5),
         );
       }
     } else {
-      return  SizedBox.shrink();
+      return  const SizedBox.shrink();
     }
+  }
+
+  Widget handleDarkMode() {
+    return IconButton(
+      icon: Switch(
+        value: isWhite,
+        onChanged: (value){
+          setState(() {
+            isWhite = value;
+            // print(isWhite);
+          });
+        },
+        activeTrackColor: Colors.grey,
+        activeColor: Colors.white,
+        inactiveTrackColor: Colors.grey,
+        inactiveThumbColor: Colors.black45,
+      ),
+      onPressed: ()=>"",
+    );
   }
 }

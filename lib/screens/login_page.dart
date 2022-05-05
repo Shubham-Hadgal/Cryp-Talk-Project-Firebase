@@ -1,7 +1,7 @@
+import 'package:cryp_talk_firebase/constants/color_constants.dart';
 import 'package:cryp_talk_firebase/providers/auth_provider.dart';
 import 'package:cryp_talk_firebase/screens/home_page.dart';
 import 'package:cryp_talk_firebase/widgets/loading_view.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -16,6 +16,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
+
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
 
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
     switch(authProvider.status){
@@ -33,51 +36,53 @@ class _LoginPageState extends State<LoginPage> {
     }
     return Scaffold(
       backgroundColor: Colors.black87,
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(),
-            Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Text(
-                'CrypTalk',
-                style: TextStyle(
-                  fontSize: 26.0,
-                    color: Color(0xffff1b5c)
-                ),
-              ),
-            ),
-            Image.asset(
-              'assets/images/back.png',
-              width: 300,
-              height: 300,
-            ),
-            SizedBox(height: 20.0),
-            Padding(
-              padding: EdgeInsets.all(10.0),
-              child: GestureDetector(
-                onTap: () async{
-                  bool isSuccess = await authProvider.handleSignIn();
-                  if(isSuccess){
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
-                  }
-                },
-                child: Image.asset(
-                  'assets/images/google_login.jpeg',
-                ),
-              ),
-            ),
-            Stack(
+      body: Stack(
+        children: [
+          Image.asset(
+            'assets/images/login_bg.jpg',
+            width: width,
+            height: height,
+            fit: BoxFit.cover,
+          ),
+          Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Container(),
-                Positioned(
-                  child: authProvider.status == Status.authenticating ? Center(child: LoadingView()) : SizedBox.shrink(),
+                Image.asset(
+                  'assets/images/back.png',
+                  width: 350,
+                  height: 350,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: GestureDetector(
+                    onTap: () async{
+                      bool isSuccess = await authProvider.handleSignIn();
+                      if(isSuccess){
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage()));
+                      }
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(40),
+                      child: Image.asset(
+                        'assets/images/google_login.jpeg',
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Stack(
+                  children: [
+                    Container(),
+                    Positioned(
+                      child: authProvider.status == Status.authenticating ? const Center(child: LoadingView()) : const SizedBox.shrink(),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
