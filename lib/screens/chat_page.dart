@@ -389,7 +389,9 @@ class ChatPageState extends State<ChatPage> {
     return Container(
       child: Row(
         children: <Widget>[
-          Material(
+          // Image Button
+
+          /*Material(
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 1),
               child: IconButton(
@@ -399,8 +401,11 @@ class ChatPageState extends State<ChatPage> {
               ),
             ),
             color: Colors.white,
-          ),
-          Material(
+          ),*/
+
+          // Stickers button
+
+          /*Material(
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 1),
               child: IconButton(
@@ -410,7 +415,7 @@ class ChatPageState extends State<ChatPage> {
               ),
             ),
             color: Colors.white,
-          ),
+          ),*/
           Flexible(
             child: TextField(
               onSubmitted: (value) {
@@ -525,14 +530,14 @@ class ChatPageState extends State<ChatPage> {
                     clipBehavior: Clip.hardEdge,
                   ),
                   onPressed: (){
-                    Navigator.push(
+                    /*Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => FullPhotoPage(
                             url: EncryptionDecryption.decryptMessage(encrypt.Encrypted.fromBase64(messageChat.content)),
                           ),
                       ),
-                    );
+                    );*/
                   },
                   style: ButtonStyle(padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(0))),
                 ) : Container(

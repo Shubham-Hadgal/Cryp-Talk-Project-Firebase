@@ -16,7 +16,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cryp_talk_firebase/models/popup_choices.dart';
 import 'package:cryp_talk_firebase/providers/auth_provider.dart';
 import 'package:cryp_talk_firebase/screens/login_page.dart';
-import 'package:cryp_talk_firebase/screens/settings_page.dart';
 import 'package:flutter/material.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
@@ -73,7 +72,7 @@ class _HomePageState extends State<HomePage> {
       handleSignOut();
     }
     else{
-      Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage()));
+      // Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage()));
     }
   }
 
@@ -311,11 +310,14 @@ class _HomePageState extends State<HomePage> {
           ),
           onPressed: ()=>"",
         ),*/
-        actions: [
+
+        // AppBar action menu
+        /*actions: [
           handleDarkMode(),
           buildPopupMenu(),
-        ],
+        ],*/
       ),
+
       body: WillPopScope(
         onWillPop: onBackPress,
         child: Stack(
