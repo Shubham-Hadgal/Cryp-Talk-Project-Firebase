@@ -6,6 +6,7 @@ import 'package:cryp_talk_firebase/constants/constants.dart';
 import 'package:cryp_talk_firebase/main.dart';
 import 'package:cryp_talk_firebase/models/user_chat.dart';
 import 'package:cryp_talk_firebase/providers/home_provider.dart';
+import 'package:cryp_talk_firebase/screens/settings_page.dart';
 import 'package:cryp_talk_firebase/utilities/debouncer.dart';
 import 'package:cryp_talk_firebase/utilities/utilities.dart';
 import 'package:cryp_talk_firebase/widgets/loading_view.dart';
@@ -20,6 +21,7 @@ import 'package:flutter/material.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 
+import '../utilities/encrypt_decrypt.dart';
 import 'chat_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -72,7 +74,7 @@ class _HomePageState extends State<HomePage> {
       handleSignOut();
     }
     else{
-      // Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage()));
     }
   }
 
@@ -280,6 +282,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    EncryptionDecryption.loadKey();
+
     return Scaffold(
       backgroundColor: isWhite ? Colors.white: Colors.black,
       appBar: AppBar(
@@ -312,10 +317,10 @@ class _HomePageState extends State<HomePage> {
         ),*/
 
         // AppBar action menu
-        /*actions: [
-          handleDarkMode(),
+        actions: [
+          // handleDarkMode(),
           buildPopupMenu(),
-        ],*/
+        ],
       ),
 
       body: WillPopScope(

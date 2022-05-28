@@ -13,11 +13,17 @@ import 'package:image_picker/image_picker.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 
+import '../utilities/change_key.dart';
+import '../utilities/encrypt_decrypt.dart';
+
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    EncryptionDecryption.loadKey();
+
     return Scaffold(
       backgroundColor: isWhite ? Colors.white: Colors.black,
       appBar: AppBar(
@@ -175,6 +181,8 @@ class _SettingsPageStateState extends State<SettingsPageState> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+
     return Stack(
       children: [
         SingleChildScrollView(
@@ -299,6 +307,38 @@ class _SettingsPageStateState extends State<SettingsPageState> {
                         aboutMe = value;
                       },
                       focusNode: focusNodeAboutMe,
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(top: 40.0, left: 10.0),
+                    child: SizedBox(
+                      height: 40,
+                      width: width / 2.5,
+                      child: TextButton.icon(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ChangeKey(),
+                              )
+                          );
+                        },
+                        icon: Icon(Icons.vpn_key_outlined),
+                        label: Text(
+                          'Change Key',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        style: ButtonStyle(
+                          foregroundColor: MaterialStateProperty.all<Color>(
+                            const Color(0xFFFFFFFF),
+                          ),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            const Color(0xFF4F4F4F),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                   /*Container(

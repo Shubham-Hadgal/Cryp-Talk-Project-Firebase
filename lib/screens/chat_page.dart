@@ -159,7 +159,7 @@ class ChatPageState extends State<ChatPage> {
   void onSendMessage(String content, int type) {
     if (content.trim().isNotEmpty) {
       String encryptedMessage =
-      EncryptionDecryption.encryptMessage(content);
+      EncryptionDecryption.encryptAES(content);
 
       textEditingController.clear();
       chatProvider.sendMessage(
@@ -217,6 +217,8 @@ class ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    EncryptionDecryption.loadKey();
+
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -390,8 +392,7 @@ class ChatPageState extends State<ChatPage> {
       child: Row(
         children: <Widget>[
           // Image Button
-
-          /*Material(
+          Material(
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 1),
               child: IconButton(
@@ -401,11 +402,11 @@ class ChatPageState extends State<ChatPage> {
               ),
             ),
             color: Colors.white,
-          ),*/
+          ),
 
           // Stickers button
 
-          /*Material(
+         /* Material(
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 1),
               child: IconButton(
@@ -457,7 +458,7 @@ class ChatPageState extends State<ChatPage> {
   Widget buildItem(int index, DocumentSnapshot? document){
     if(document != null){
       MessageChat messageChat = MessageChat.fromDocument(document);
-      String msg = EncryptionDecryption.decryptMessage(encrypt.Encrypted.fromBase64(messageChat.content));
+      String msg = EncryptionDecryption.decryptAES(encrypt.Encrypted.fromBase64(messageChat.content));
       if(messageChat.idFrom == currentUserId){
         return Column(
           // Right Side ((Sending Side))
@@ -485,7 +486,7 @@ class ChatPageState extends State<ChatPage> {
                 ? OutlinedButton(
                   child: Material(
                     child: Image.network(
-                      EncryptionDecryption.decryptMessage(encrypt.Encrypted.fromBase64(messageChat.content)),
+                      EncryptionDecryption.decryptAES(encrypt.Encrypted.fromBase64(messageChat.content)),
                       loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress){
                         if(loadingProgress == null) return child;
                         return Container(
@@ -530,19 +531,19 @@ class ChatPageState extends State<ChatPage> {
                     clipBehavior: Clip.hardEdge,
                   ),
                   onPressed: (){
-                    /*Navigator.push(
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => FullPhotoPage(
-                            url: EncryptionDecryption.decryptMessage(encrypt.Encrypted.fromBase64(messageChat.content)),
+                            url: EncryptionDecryption.decryptAES(encrypt.Encrypted.fromBase64(messageChat.content)),
                           ),
                       ),
-                    );*/
+                    );
                   },
                   style: ButtonStyle(padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(0))),
                 ) : Container(
                   child: Image.asset(
-                    'assets/images/${EncryptionDecryption.decryptMessage(encrypt.Encrypted.fromBase64(messageChat.content))}.gif',
+                    'assets/images/${EncryptionDecryption.decryptAES(encrypt.Encrypted.fromBase64(messageChat.content))}.gif',
                     width: 100,
                     height: 100,
                     fit: BoxFit.cover,
@@ -608,7 +609,7 @@ class ChatPageState extends State<ChatPage> {
                       maxWidth: 200,
                     ),
                     child: Text(
-                        EncryptionDecryption.decryptMessage(encrypt.Encrypted.fromBase64(messageChat.content)),
+                        EncryptionDecryption.decryptAES(encrypt.Encrypted.fromBase64(messageChat.content)),
                       style: const TextStyle(color: Colors.white, fontSize: 14.5),
                     ),
                     padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
@@ -619,7 +620,7 @@ class ChatPageState extends State<ChatPage> {
                     child: TextButton(
                       child: Material(
                         child: Image.network(
-                          EncryptionDecryption.decryptMessage(encrypt.Encrypted.fromBase64(messageChat.content)),
+                          EncryptionDecryption.decryptAES(encrypt.Encrypted.fromBase64(messageChat.content)),
                           loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress){
                             if(loadingProgress == null) return child;
                             return Container(
@@ -665,7 +666,7 @@ class ChatPageState extends State<ChatPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => FullPhotoPage(url: EncryptionDecryption.decryptMessage(encrypt.Encrypted.fromBase64(messageChat.content))),
+                            builder: (context) => FullPhotoPage(url: EncryptionDecryption.decryptAES(encrypt.Encrypted.fromBase64(messageChat.content))),
                           )
                         );
                       },
@@ -674,7 +675,7 @@ class ChatPageState extends State<ChatPage> {
                     margin: const EdgeInsets.only(left: 10),
                   ) : Container(
                     child: Image.asset(
-                      'assets/images/${EncryptionDecryption.decryptMessage(encrypt.Encrypted.fromBase64(messageChat.content))}.gif',
+                      'assets/images/${EncryptionDecryption.decryptAES(encrypt.Encrypted.fromBase64(messageChat.content))}.gif',
                       width: 100,
                       height: 100,
                       fit: BoxFit.cover,
