@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 
+import '../utilities/change_key.dart';
 import '../utilities/encrypt_decrypt.dart';
 import 'chat_page.dart';
 
@@ -283,7 +284,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
 
-    EncryptionDecryption.loadKey();
+    // EncryptionDecryption.loadKey();
 
     return Scaffold(
       backgroundColor: isWhite ? Colors.white: Colors.black,
@@ -504,6 +505,11 @@ class _HomePageState extends State<HomePage> {
               if(Utilities.isKeyboardShowing()) {
                   Utilities.closeKeyboard(context);
               }
+              // setting the key with respect to the user id
+              Keys.setMapKey(userChat.id);
+              // loading the key with respect to the user id
+              EncryptionDecryption.loadKey();
+
               Navigator.push(context, MaterialPageRoute(builder: (context) => ChatPage(
                     peerId: userChat.id,
                     peerAvatar: userChat.photoUrl,

@@ -4,7 +4,6 @@ import 'change_key.dart';
 class EncryptionDecryption{
   static Encrypted? encrypted ;
   static var decrypted = '';
-
   static String _secretKey = '';
 
   static loadKey() {

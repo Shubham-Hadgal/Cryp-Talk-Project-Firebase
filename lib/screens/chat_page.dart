@@ -14,6 +14,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import '../utilities/change_key.dart';
 import '../utilities/encrypt_decrypt.dart';
 import 'full_photo_page.dart';
 import 'login_page.dart';
@@ -67,6 +68,8 @@ class ChatPageState extends State<ChatPage> {
     super.initState();
     chatProvider = context.read<ChatProvider>();
     authProvider = context.read<AuthProvider>();
+    Keys.setMapKey(peerId);
+    EncryptionDecryption.loadKey();
 
     focusNode.addListener(onFocusChange);
     listScrollController.addListener(_scrollListener);
@@ -247,7 +250,7 @@ class ChatPageState extends State<ChatPage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => FullPhotoPage(url: peerAvatar),
+                        builder: (context) => FullPhotoPage(url: peerAvatar, name: peerNickname),
                       )
                   );
                 },
@@ -271,6 +274,19 @@ class ChatPageState extends State<ChatPage> {
             ),
           ],
         ),
+        actions: [
+          IconButton(
+            icon: Container(
+              child: Icon(Icons.vpn_key),
+              padding: EdgeInsets.only(right: 10.0),
+            ),
+            onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ChangeKey(),
+                ),
+              );
+            },
+          ),
+        ],
         // centerTitle: true,
       ),
       body: WillPopScope(
@@ -536,6 +552,7 @@ class ChatPageState extends State<ChatPage> {
                       MaterialPageRoute(
                           builder: (context) => FullPhotoPage(
                             url: EncryptionDecryption.decryptAES(encrypt.Encrypted.fromBase64(messageChat.content)),
+                            name: peerNickname,
                           ),
                       ),
                     );
@@ -666,7 +683,7 @@ class ChatPageState extends State<ChatPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => FullPhotoPage(url: EncryptionDecryption.decryptAES(encrypt.Encrypted.fromBase64(messageChat.content))),
+                            builder: (context) => FullPhotoPage(url: EncryptionDecryption.decryptAES(encrypt.Encrypted.fromBase64(messageChat.content)), name: peerNickname),
                           )
                         );
                       },

@@ -2,16 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
 
+import '../constants/color_constants.dart';
+
 class Keys {
   static String _key = '';
+  static String _mapKey = '';
+
+  static setMapKey(String mk) {
+    _mapKey = mk;
+  }
 
   static String getKey() {
-    _ChangeKeyState()._read();
+    _ChangeKeyState()._read(_mapKey);
     return _key;
   }
 
   static setKey(String key) {
-    _ChangeKeyState()._save(key);
+    _ChangeKeyState()._save(_mapKey, key);
   }
 }
 
@@ -33,18 +40,20 @@ class _ChangeKeyState extends State<ChangeKey> {
     });
   }
 
-  _read() async {
+  _read(String mapKey) async {
     final prefs = await SharedPreferences.getInstance();
-    const key = 'aesKey';
+    String key = mapKey;
     final value = prefs.getString(key) ?? 'Please set the Key';
     Keys._key = value;
+    Keys._mapKey = key;
   }
 
-  _save(String secretKey) async {
+  _save(String mapKey, String secretKey) async {
     final prefs = await SharedPreferences.getInstance();
-    const key = 'aesKey';
+    String key = mapKey;
     final value = secretKey;
     prefs.setString(key, value);
+    Keys._mapKey = key;
     Keys._key = value;
   }
 
@@ -105,7 +114,7 @@ class _ChangeKeyState extends State<ChangeKey> {
                 focusedBorder: OutlineInputBorder(
                   gapPadding: 0.0,
                   borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide(color: Colors.blueAccent, width: 1.5),
+                  borderSide: BorderSide(color: Colors.green, width: 1.5),
                 ),
               ),
             ),
@@ -122,26 +131,26 @@ class _ChangeKeyState extends State<ChangeKey> {
                 textEditingController1.text.length == 24 ||
                 textEditingController1.text.length == 32) {
               print(Keys._key);
-              await _save(textEditingController1.text);
+              await _save(Keys._mapKey, textEditingController1.text);
               setState(() {});
               print(Keys._key);
             } else {
               _showToast(context);
             }
           },
-          icon: Icon(Icons.save_outlined),
+          icon: Icon(Icons.save_outlined, color: Colors.white),
           label: Text(
             'Save',
             style: TextStyle(
               fontSize: 16.0,
+              color: Colors.white
             ),
           ),
           style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.all<Color>(
-              const Color(0xFFFFFFFF),
-            ),
-            backgroundColor: MaterialStateProperty.all<Color>(
-              const Color(0xFF4F4F4F),
+            backgroundColor: MaterialStateProperty.all<Color>(ColorConstants.primaryColor),
+            shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
+            padding: MaterialStateProperty.all<EdgeInsets>(
+              const EdgeInsets.fromLTRB(30, 10, 30, 10),
             ),
           ),
         ),
@@ -168,7 +177,7 @@ class _ChangeKeyState extends State<ChangeKey> {
             ],
           ),
           SizedBox(
-            height: 70,
+            height: 90,
             width: width / 0.7,
             child: Container(
               decoration: BoxDecoration(
@@ -186,16 +195,21 @@ class _ChangeKeyState extends State<ChangeKey> {
     return Scaffold(
       backgroundColor: Color(0xFF242424),
       appBar: AppBar(
+        iconTheme: const IconThemeData(
+          color: ColorConstants.primaryColor,
+        ),
         title: Container(
           padding: const EdgeInsets.only(left: 10.0),
           child: const Text(
             'Change Key',
             style: TextStyle(
               fontSize: 22.0,
+              color: ColorConstants.primaryColor,
             ),
           ),
         ),
         titleSpacing: 1.0,
+        backgroundColor: Colors.grey[900],
       ),
       body: SingleChildScrollView(
         child: Stack(

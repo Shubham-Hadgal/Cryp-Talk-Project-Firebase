@@ -13,16 +13,13 @@ import 'package:image_picker/image_picker.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 
-import '../utilities/change_key.dart';
-import '../utilities/encrypt_decrypt.dart';
-
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
 
-    EncryptionDecryption.loadKey();
+    // EncryptionDecryption.loadKey();
 
     return Scaffold(
       backgroundColor: isWhite ? Colors.white: Colors.black,
@@ -181,7 +178,7 @@ class _SettingsPageStateState extends State<SettingsPageState> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    // double width = MediaQuery.of(context).size.width;
 
     return Stack(
       children: [
@@ -197,7 +194,7 @@ class _SettingsPageStateState extends State<SettingsPageState> {
                   child: avatarImageFile == null
                       ? photoUrl.isNotEmpty
                   ? ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
+                    borderRadius: BorderRadius.circular(70),
                     child: Image.network(
                       photoUrl,
                       fit: BoxFit.cover,
@@ -206,7 +203,7 @@ class _SettingsPageStateState extends State<SettingsPageState> {
                       errorBuilder: (context, object, stackTrace){
                         return const Icon(
                           Icons.account_circle,
-                          size: 100,
+                          size: 130,
                           color: ColorConstants.greyColor,
                         );
                       },
@@ -309,7 +306,7 @@ class _SettingsPageStateState extends State<SettingsPageState> {
                       focusNode: focusNodeAboutMe,
                     ),
                   ),
-                  Container(
+                  /*Container(
                     padding: EdgeInsets.only(top: 40.0, left: 10.0),
                     child: SizedBox(
                       height: 40,
@@ -340,7 +337,7 @@ class _SettingsPageStateState extends State<SettingsPageState> {
                         ),
                       ),
                     ),
-                  ),
+                  ),*/
                   /*Container(
                     child: const Text(
                       'Phone Number',
