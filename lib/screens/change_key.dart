@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/services.dart';
-
+import 'package:share_plus/share_plus.dart';
 import '../constants/color_constants.dart';
 
 class Keys {
@@ -88,7 +88,8 @@ class _ChangeKeyState extends State<ChangeKey> {
                         style: TextStyle(
                             fontSize: 16,
                             color: Colors.green,
-                            fontWeight: FontWeight.bold))),
+                            fontWeight: FontWeight.bold)),
+                ),
               ],
             ),
             SizedBox(height: 8.0),
@@ -156,6 +157,37 @@ class _ChangeKeyState extends State<ChangeKey> {
         ),
       ),
     );
+    Widget shareButton = Container(
+      padding: EdgeInsets.only(top: 10.0, left: 10.0),
+      child: SizedBox(
+        height: 40,
+        width: width / 2.5,
+        child: TextButton.icon(
+          onPressed: () {
+            if(Keys._key != 'Please set the Key') {
+              Share.share(Keys._key);
+            } else {
+              Fluttertoast.showToast(msg: 'Please set the Key first');
+            }
+          },
+          icon: Icon(Icons.share_rounded, color: Colors.white),
+          label: Text(
+            'Share',
+            style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.white
+            ),
+          ),
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(ColorConstants.primaryColor),
+            shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
+            padding: MaterialStateProperty.all<EdgeInsets>(
+              const EdgeInsets.fromLTRB(30, 10, 30, 10),
+            ),
+          ),
+        ),
+      ),
+    );
     Widget displayKey = Container(
       padding: EdgeInsets.all(10.0),
       child: Column(
@@ -168,12 +200,6 @@ class _ChangeKeyState extends State<ChangeKey> {
                 child: Text('Your Current Key :',
                     style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white70)),
               ),
-              Spacer(),
-              IconButton(
-                  onPressed: () {
-                    Clipboard.setData(ClipboardData(text: Keys._key));
-                  },
-                  icon: Icon(Icons.copy_rounded, size: 24.0, color: Colors.white70,)),
             ],
           ),
           SizedBox(
@@ -189,6 +215,7 @@ class _ChangeKeyState extends State<ChangeKey> {
               ),
             ),
           ),
+
         ],
       ),
     );
@@ -220,6 +247,7 @@ class _ChangeKeyState extends State<ChangeKey> {
                 getKeyTextField,
                 saveButton,
                 displayKey,
+                shareButton,
               ],
             ),
           ],

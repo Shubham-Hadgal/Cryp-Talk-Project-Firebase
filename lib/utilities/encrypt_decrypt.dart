@@ -1,5 +1,5 @@
 import 'package:encrypt/encrypt.dart';
-import 'change_key.dart';
+import '../screens/change_key.dart';
 
 class EncryptionDecryption{
   static Encrypted? encrypted ;

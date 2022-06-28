@@ -21,7 +21,7 @@ import 'package:flutter/material.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 
-import '../utilities/change_key.dart';
+import 'change_key.dart';
 import '../utilities/encrypt_decrypt.dart';
 import 'chat_page.dart';
 
@@ -284,8 +284,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
 
-    // EncryptionDecryption.loadKey();
-
     return Scaffold(
       backgroundColor: isWhite ? Colors.white: Colors.black,
       appBar: AppBar(
@@ -300,30 +298,11 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        /*leading: IconButton(
-          icon: Switch(
-            value: isWhite,
-            onChanged: (value){
-              setState(() {
-                isWhite = value;
-                // print(isWhite);
-              });
-            },
-            activeTrackColor: Colors.grey,
-            activeColor: Colors.white,
-            inactiveTrackColor: Colors.grey,
-            inactiveThumbColor: Colors.black45,
-          ),
-          onPressed: ()=>"",
-        ),*/
-
         // AppBar action menu
         actions: [
-          // handleDarkMode(),
           buildPopupMenu(),
         ],
       ),
-
       body: WillPopScope(
         onWillPop: onBackPress,
         child: Stack(

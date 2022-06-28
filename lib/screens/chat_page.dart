@@ -14,7 +14,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import '../utilities/change_key.dart';
+import 'change_key.dart';
 import '../utilities/encrypt_decrypt.dart';
 import 'full_photo_page.dart';
 import 'login_page.dart';
@@ -208,15 +208,6 @@ class ChatPageState extends State<ChatPage> {
     }
     return Future.value(false);
   }
-
-/*  void _callPhoneNumber(String callPhoneNumber) async {
-    var url = 'tel://$callPhoneNumber';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Error occurred';
-    }
-  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -474,7 +465,18 @@ class ChatPageState extends State<ChatPage> {
   Widget buildItem(int index, DocumentSnapshot? document){
     if(document != null){
       MessageChat messageChat = MessageChat.fromDocument(document);
-      String msg = EncryptionDecryption.decryptAES(encrypt.Encrypted.fromBase64(messageChat.content));
+      String msg;
+      String img;
+      try {
+        msg = EncryptionDecryption.decryptAES(encrypt.Encrypted.fromBase64(messageChat.content));
+      } catch(e) {
+        msg = 'Encrypted Messages';
+      }
+      try {
+        img = EncryptionDecryption.decryptAES(encrypt.Encrypted.fromBase64(messageChat.content));
+      } catch (e) {
+        img = 'Encrypted image';
+      }
       if(messageChat.idFrom == currentUserId){
         return Column(
           // Right Side ((Sending Side))
@@ -489,7 +491,7 @@ class ChatPageState extends State<ChatPage> {
                   ),
                   child: Text(
                     msg,
-                    style: const TextStyle(color: Colors.white, fontSize: 14.5),
+                    style: msg != 'Encrypted Messages' ? TextStyle(color: Colors.white, fontSize: 14.5) : TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 14.5, fontStyle: FontStyle.italic),
                   ),
                   padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                   decoration: const BoxDecoration(
@@ -502,7 +504,7 @@ class ChatPageState extends State<ChatPage> {
                 ? OutlinedButton(
                   child: Material(
                     child: Image.network(
-                      EncryptionDecryption.decryptAES(encrypt.Encrypted.fromBase64(messageChat.content)),
+                      img,
                       loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress){
                         if(loadingProgress == null) return child;
                         return Container(
@@ -551,7 +553,7 @@ class ChatPageState extends State<ChatPage> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => FullPhotoPage(
-                            url: EncryptionDecryption.decryptAES(encrypt.Encrypted.fromBase64(messageChat.content)),
+                            url: img,
                             name: peerNickname,
                           ),
                       ),
@@ -626,8 +628,8 @@ class ChatPageState extends State<ChatPage> {
                       maxWidth: 200,
                     ),
                     child: Text(
-                        EncryptionDecryption.decryptAES(encrypt.Encrypted.fromBase64(messageChat.content)),
-                      style: const TextStyle(color: Colors.white, fontSize: 14.5),
+                      msg,
+                      style: msg != 'Encrypted Messages' ? TextStyle(color: Colors.white, fontSize: 14.5) : TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 14.5, fontStyle: FontStyle.italic),
                     ),
                     padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                     decoration: const BoxDecoration(color: ColorConstants.dark, borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15), bottomRight: Radius.circular(15))),
@@ -637,7 +639,7 @@ class ChatPageState extends State<ChatPage> {
                     child: TextButton(
                       child: Material(
                         child: Image.network(
-                          EncryptionDecryption.decryptAES(encrypt.Encrypted.fromBase64(messageChat.content)),
+                          img,
                           loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress){
                             if(loadingProgress == null) return child;
                             return Container(
@@ -683,7 +685,7 @@ class ChatPageState extends State<ChatPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => FullPhotoPage(url: EncryptionDecryption.decryptAES(encrypt.Encrypted.fromBase64(messageChat.content)), name: peerNickname),
+                            builder: (context) => FullPhotoPage(url: img, name: peerNickname),
                           )
                         );
                       },
