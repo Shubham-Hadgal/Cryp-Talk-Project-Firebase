@@ -245,7 +245,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void configureLocalNotification(){
-    AndroidInitializationSettings initializationAndroidSettings = const AndroidInitializationSettings("app_icon");
+    AndroidInitializationSettings initializationAndroidSettings = const AndroidInitializationSettings("app_icon.png");
     IOSInitializationSettings initializationIOsSettings = const IOSInitializationSettings();
     InitializationSettings initializationSettings = InitializationSettings(
         android: initializationAndroidSettings,
